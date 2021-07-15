@@ -1,9 +1,9 @@
 const express = require("espress");
 const path = require("path");
 const savedNotes = require("./db/db.json");
-
+const fs = require("fs");
 const app = espress();
-
+const uniquid = require("uniquid");
 const PORT = process.env.PORT || 3306;
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -25,8 +25,20 @@ app.get('*', (req,res) => {
 });
 
 app.post('/api/notes', (req, res) => {
-    savedNotes.push(req.body);
-    console.log(savedNotes);
-})
+    console.log(req.body)
+    console.log(uniquid())
+    let note = {
+        title: req.body.title,
+        text: req.body.text,
+        id: uniquid()
+    }
+    console.log(note)
+    savedNotes.push(note);
+    fs.writeFile("./db/db.json", JSON.stringify(savedNotes), err => {
+        if(err){console.log(err)}
+        res.json(savedNotes)
+    })
+});
+
 
 
