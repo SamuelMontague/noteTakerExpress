@@ -19,11 +19,10 @@ For this project I was tasked with building a server.js file as well as creating
 
 * [Contributing](#contributing)
 
-
 * [Questions](#questions)
     
 # Preview
-    Deployed here: 
+    Deployed here: https://git.heroku.com/blooming-reef-85751.git
 
 # Execute   
 git clone my repo and run "npm install" in the command line to download my package dependencies.
