@@ -1,24 +1,19 @@
 const path = require("path");
 const fs = require("fs").promises;
-const savedNotes = require("../db/db.json");
+const {nanoid} = require('nanoid');
 
 module.exports = (app) => {
-    app.get('/api/notes', (req, res) => res.json(savedNotes));
+    app.get('/api/notes', (req, res) => {
+        getNotes().then(data => res.json(data)).catch((err) => console.log(err));
+    })
 
     app.post('/api/notes', (req, res) => {
-        console.log(req.body)
-        console.log(uniquid())
-        let note = {
+        let newNote = {
             title: req.body.title,
             text: req.body.text,
-            id: uniquid()
+            id: nanoid(),
         }
-        console.log(note)
-        savedNotes.push(note);
-        fs.writeFile("./db/db.json", JSON.stringify(savedNotes), err => {
-            if(err){console.log(err)}
-            res.json(savedNotes)
-        })
+        createNote(newNote).then(data => res.json(data)).catch((err) => console.log(err))
     });
 
     app.delete("/api/notes/:id", (req, res) => {
@@ -43,7 +38,7 @@ module.exports = (app) => {
     }
 
     const deleteNote = async id => {
-        const totalNotes = await retriveNotes();
+        const totalNotes = await getNotes();
         const filteredNotes = await totalNotes.filter((note) => id !== note.id);
         const file = path.join(__dirname, "../db/db.json" )
         await fs.writeFile(file, JSON.stringify(filteredNotes));

@@ -1,41 +1,27 @@
-const express = require("espress");
-const path = require("path");
-const savedNotes = require("./db/db.json");
-const fs = require("fs");
-const app = espress();
-const uniquid = require("uniquid");
-const PORT = process.env.PORT || 3306;
+const express = require("express");
 
-app.use(express.static(path.join(__dirname, 'public')));
+
+// setting express server
+const app = express();
+const port = process.env.PORT || 8000;
+
+// for parse data
 app.use(express.urlencoded({extended: true }));
 app.use(express.json());
 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, './public/index.html'));
-});
+app.use(express.static("public"));
+
+// routes for folders
+require("./routes/api")(app);
+
+require("./routes/html")(app);
 
 
-app.get('/api/notes', (req, res) => res.json(savedNotes));
+app.listen(port, () => console.log("listening on port:", port));
 
-app.get('*', (req,res) => {
-    res.sendFile(path.join(__dirname, './public/index.html'));
-});
 
-app.post('/api/notes', (req, res) => {
-    console.log(req.body)
-    console.log(uniquid())
-    let note = {
-        title: req.body.title,
-        text: req.body.text,
-        id: uniquid()
-    }
-    console.log(note)
-    savedNotes.push(note);
-    fs.writeFile("./db/db.json", JSON.stringify(savedNotes), err => {
-        if(err){console.log(err)}
-        res.json(savedNotes)
-    })
-});
+
+
 
 
 

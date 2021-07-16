@@ -2,11 +2,15 @@ const path = require("path");
 
 
 module.exports = app => {
+
+    // load notes html
     app.get('/notes', (req, res) => {
-        res.sendFile(path.join(__dirname, './public/notes.html'));
+        res.sendFile(path.join(__dirname, "../public/notes.html"));
     });
 
+
+    // load homepage
     app.get('/', (req, res) => {
-        res.sendFile(path.join(__dirname, './public/index.html'));
+        res.sendFile(path.join(__dirname, "../public/index.html"));
     });
 }
