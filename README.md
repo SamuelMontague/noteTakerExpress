@@ -24,6 +24,9 @@ For this project I was tasked with building a server.js file as well as creating
 # Preview
     Deployed here: https://git.heroku.com/blooming-reef-85751.git
 
+    ![screenshot](./public/assets/images/Notetakerlandingpage.png)
+    ![screenshot](./public/assets/images/Notetakingpage.png)
+
 # Execute   
 git clone my repo and run "npm install" in the command line to download my package dependencies.
 
