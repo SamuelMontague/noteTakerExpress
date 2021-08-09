@@ -24,8 +24,7 @@ app.get('/', (req, res) => {
 
 //Route to notes.html file
 app.get('/notes', (req, res) => {
-   
-    res.sendFile(path.join(__dirname, './public/notes.html'));
+   res.sendFile(path.join(__dirname, './public/notes.html'));
 });
 
 //Route to db file to create a new note
